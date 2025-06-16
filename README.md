@@ -16,3 +16,6 @@ Furthermore, configuring an **ingress/egress solution** within a microservices a
 ### Panoptic: A Novel Solution for Microservices Observability
 
 To address these persistent microservices challenges, the innovative solution **Panoptic** has been developed. Unlike traditional approaches, Panoptic leverages **network sniffing to log traffic**, eliminating the need for disruptive proxies that can interfere with existing configurations. This approach also removes the burden of continuous, verbose logging by enabling traffic monitoring only during specific diagnostic intervals. This **on-demand capability** ensures that critical network data is captured precisely when needed, without compromising microservices performance or configuration integrity. By providing targeted and non-invasive traffic insights, Panoptic offers a practical way to overcome the visibility and configuration complexities inherent in microservices architectures.
+
+---
+Stay tuned for news and updates on Panoptic's first release! 🚀
