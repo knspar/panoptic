@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "justniffer-stack.daemon.name" . }}
+  labels:
+    {{- include "justniffer-stack.labels" . | nindent 4 }}
+    {{- include "justniffer-stack.daemon.selectorLabels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "justniffer-stack.daemon.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "justniffer-stack.labels" . | nindent 8 }}
+        {{- include "justniffer-stack.daemon.selectorLabels" . | nindent 8 }}
+        app: justniffer-server
+    spec:
+      containers:
+      - name: justniffer-server-container
+        image:  {{ include "justserver-image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:  ["uvicorn", "--log-level", "error", "justserver.daemon:app", "--host", "0.0.0.0", "--port", "8000"]
+        env:
+        - name: JUSTSERVER_JUSTNIFFER_CMD
+          value: "nsenter --net=/host/proc/1/ns/net -- justniffer"
+        - name: JUSTSERVER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "justniffer-stack.apiSecretName" . }}
+              key: api-key
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.daemon.resources | nindent 14 }}
+        {{- include "justniffer-stack.standardProbe" (dict "probeType" "startupProbe" "Values" .Values ) | nindent 8 }}
+        {{- include "justniffer-stack.standardProbe" (dict "probeType" "readinessProbe" "Values" .Values ) | nindent 8 }}
+        {{- include "justniffer-stack.standardProbe" (dict "probeType" "livenessProbe" "Values" .Values ) | nindent 8 }}
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: host-proc
+          mountPath: /host/proc
+          readOnly: true
+      volumes:
+        - name: host-proc
+          hostPath: { path: /proc }
+      restartPolicy: Always
+      {{- with .Values.daemon.nodeSelector }}
+      nodeSelector: {{- toYaml . | nindent 12 }}
+      {{- end }}
+      {{- with .Values.daemon.tolerations }}
+      tolerations: {{- toYaml . | nindent 12 }}
+      {{- end }}

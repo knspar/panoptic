@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "justniffer-stack.operator.roleBindingName" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "justniffer-stack.operator.name" . }}
+    namespace: {{ .Release.Namespace }}
+
+roleRef:
+  kind: ClusterRole
+  name: {{ include "justniffer-stack.operator.roleName" . }}
+  apiGroup: rbac.authorization.k8s.io

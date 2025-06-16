@@ -1,0 +1,77 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: justniffers.knspar.github.io
+spec:
+  group: knspar.github.io
+  names:
+    kind: Justniffer
+    plural: justniffers
+    singular: justniffer
+    shortNames:
+      - jn
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                interface:
+                  type: string
+                  default: "any"
+                in_the_middle:
+                  type: boolean
+                  default: true
+                filter:
+                  type: string
+                  nullable: true
+                encode:
+                  type: string
+                  enum:
+                    - "unprintable"
+                    - "hex_encode"
+                  nullable: true
+                log_format:
+                  type: string
+                  nullable: true
+                max_tcp_streams:
+                  type: integer
+                  nullable: true
+                truncated:
+                  type: boolean
+                  default: false
+                newline:
+                  type: boolean
+                  default: false
+                active:
+                  type: boolean
+                  default: true
+              required:
+                - interface
+                - in_the_middle
+            status:
+              type: object
+              description: The status of the justniffer resource.
+              properties:
+                phase:
+                  type: string
+                  description: Current phase of the resource (e.g., Pending, Running, Completed).
+
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: Interface
+          type: string
+          jsonPath: .spec.interface
+        - name: Phase
+          type: string
+          jsonPath: .status.phase
+        - name: Log Format
+          type: string
+          jsonPath: .spec.log_format

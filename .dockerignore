@@ -1,0 +1,8 @@
+.home
+.root
+__pycache__
+.mypy_cache
+.vscode
+justniffer
+docker
+crd

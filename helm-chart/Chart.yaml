@@ -1,0 +1,18 @@
+apiVersion: v2
+name: justniffer-stack
+description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes cluster.
+type: application
+
+version: 0.1.19
+
+appVersion: "0.1.19"
+
+keywords:
+  - justniffer
+  - network
+  - sniffer
+  - monitoring
+  - tracing
+maintainers:
+  - name: Knspar
+    email: knspar@proton.me

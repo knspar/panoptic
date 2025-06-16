@@ -1,0 +1,25 @@
+apiVersion: knspar.github.io/v1
+kind: Justniffer
+metadata:
+  name: my-web-sniffer
+  namespace: netmon
+spec:
+  interface: any
+  in_the_middle: false
+  log_format: "sniffer1: %request.timestamp - %source.ip:%source.port -> %dest.ip:%dest.port - %request.size - %response.size"
+  max_tcp_streams: 100
+  truncated: false
+  newline: true
+---
+apiVersion: knspar.github.io/v1
+kind: Justniffer
+metadata:
+  name: my-web-sniffer2
+  namespace: netmon
+spec:
+  interface: any
+  in_the_middle: false
+  log_format: "%python(justniffer.handlers)"
+  max_tcp_streams: 100
+  truncated: false
+  newline: true

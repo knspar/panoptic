@@ -1,0 +1,17 @@
+image:
+  pullPolicy: IfNotPresent
+
+apiKey: ""
+
+daemon:
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+
+operator:
+  resources: {}
+
+proxy:
+  replicaCount: 1
+  logLevel: "info"
+  resources: {}

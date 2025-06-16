@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "justniffer-stack.operator.name" . }}
+  labels:
+    {{- include "justniffer-stack.labels" . | nindent 4 }}
+    app.kubernetes.io/component: operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "justniffer-stack.operator.selectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      labels:
+        {{- include "justniffer-stack.operator.selectorLabels" . | nindent 8 }}
+
+    spec:
+      serviceAccountName: {{ include "justniffer-stack.operator.serviceAccountName" . }}
+      containers:
+      - name: justniffer-operator
+        image:  {{ include "justernetes-image" . }}
+        imagePullPolicy: IfNotPresent
+        
+        env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: JUSTERNETES_JUSTNIFFER_PROXY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "justniffer-stack.apiSecretName" . }}
+              key: api-key
+        - name: JUSTERNETES_JUSTNIFFER_PROXY_ENDPOINT
+          value: {{ printf "http://%s:8000" (include "justniffer-stack.proxy.service.name" .) }}
+        resources:
+          {{- toYaml .Values.operator.resources | nindent 12 }}
+
+        {{- with .Values.daemon.nodeSelector }}
+        nodeSelector: {{- toYaml . | nindent 12 }}
+        {{- end }}

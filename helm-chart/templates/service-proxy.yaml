@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "justniffer-stack.proxy.service.name" . }}
+  labels:
+    {{- include "justniffer-stack.labels" . | nindent 4 }}
+    {{- include "justniffer-stack.proxy.selectorLabels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "justniffer-stack.proxy.selectorLabels" . | nindent 4 }}
+  ports:
+  - name: http 
+    port: 8000
+    targetPort: http
+    protocol: TCP
