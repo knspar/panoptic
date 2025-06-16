@@ -1,5 +1,5 @@
 apiVersion: v2
-name: justniffer-stack
+name: panoptic
 description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes cluster.
 type: application
 
