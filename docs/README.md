@@ -14,7 +14,28 @@ Furthermore, configuring an **ingress/egress solution** within a microservices a
 ---
 ### Phronetis: A Novel Solution for Microservices Observability
 
-To address these persistent microservices challenges, the innovative solution **Phronetis** has been developed. Unlike traditional approaches, Phronetis leverages **network sniffing to log traffic**, eliminating the need for disruptive proxies that can interfere with existing configurations. This approach also removes the burden of continuous, verbose logging by enabling traffic monitoring only during specific diagnostic intervals. This **on-demand capability** ensures that critical network data is captured precisely when needed, without compromising microservices performance or configuration integrity. By providing targeted and non-invasive traffic insights, Phronetis offers a practical way to overcome the visibility and configuration complexities inherent in microservices architectures and it is especially useful when troubleshooting ingress and egress configurations.
+To address these persistent microservices challenges, **Phronetis** has been developed. Unlike traditional approaches, Phronetis leverages **network sniffing to log traffic**, eliminating the need for disruptive proxies that can interfere with existing configurations. This approach also removes the burden of continuous, verbose logging by enabling traffic monitoring only during specific diagnostic intervals. This **on-demand capability** ensures that critical network data is captured precisely when needed, without compromising microservices performance or configuration integrity. By providing targeted and non-invasive traffic insights, Phronetis offers a practical way to overcome the visibility and configuration complexities inherent in microservices architectures and it is especially useful when troubleshooting ingress and egress configurations.
+
+It is not intended to replace the proxy sidecar or a sidecarless service mesh, but rather serves as a practical, immediate alternative and a valuable tool for troubleshooting the aforementioned approache
 
 ---
-Stay tuned for news and updates on Phronetis's first release! 🚀
+
+
+That’s great news for users looking to get Phronetis up and running quickly in their clusters. Here's a polished version you can use for documentation, a README, or a slide:
+
+---
+
+### 🚀 Easy Installation via Helm
+Phronetis is  available as a Helm chart on [Artifact Hub](https://artifacthub.io/packages/search?repo=phronetis)!  
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/phronetis)](https://artifacthub.io/packages/search?repo=phronetis)
+
+Install it in your Kubernetes cluster with:
+
+```bash
+helm install phronetis phronetis/phronetis \
+  --namespace netmon \
+  --create-namespace
+```
+
+> This streamlined deployment makes it even easier to integrate Phronetis into your observability stack.
+
