@@ -58,51 +58,64 @@ def _get_justniffer_cmd() -> list[str]:
     return split(settings.justniffer_cmd)
 
 
+class JustnifferRunner:
+    def __init__(self, justniffer: Justniffer):
+        self.justniffer = justniffer
+
+    def run(self) -> tuple[Popen | None, str | None]:
+        justniffer = self.justniffer
+        justniffer_cmd = _get_justniffer_cmd()
+        command = justniffer_cmd
+        populate_args(justniffer, command)
+        logger.info(' '.join(command))
+        try:
+            # copy environment
+            env = os.environ.copy()
+            logger.debug(f'justniffer env: {env}')
+            process = Popen(command, stderr=PIPE, env=env)
+        except Exception as e:
+            msg = f'failed to start justniffer: {e}'
+            logger.error(msg)
+            return None, msg
+        return_code = None
+        try:
+            process.wait(timeout=WAIT_TIMEOUT)
+            return_code = process.returncode
+            if (return_code) is not None and return_code != -9:
+                stderr = process.stderr.read().decode() if process.stderr else ''
+                process.wait()
+                err_msg = f'command failed ({return_code}): {stderr.strip()}'
+                logger.error(err_msg)
+                return None, err_msg
+                # return {'message': err_msg}
+            else:
+                logger.info(return_code)
+                return process, None
+        except TimeoutExpired as e:
+            return process, None
+
+
 def run_justniffer(justniffer: Justniffer) -> tuple[Popen | None, str | None]:
-    justniffer_cmd = _get_justniffer_cmd()
-    command = justniffer_cmd + ['-i', justniffer.interface]
-    process = None
+    return JustnifferRunner(justniffer).run()
+
+
+def populate_args(justniffer: Justniffer, command: list[str]):
+    command.extend(['--interface', justniffer.interface])
     if justniffer.encode:
-        encode_flag = f'--{justniffer.encode.value.replace("_", "-")}'
+        encode_flag = f'--{justniffer.encode.value.replace('_', '-')}'
         command.append(encode_flag)
     if justniffer.log_format:
-        command.extend(['-l', f'{justniffer.log_format}'])
+        command.extend(['--log-format', f'{justniffer.log_format}'])
     if justniffer.filter:
-        command.extend(['-p', f'{justniffer.filter}'])
+        command.extend(['--packet-filter', f'{justniffer.filter}'])
     if justniffer.in_the_middle:
-        command.append('-m')
+        command.append('--capture-in-the-middle')
     if justniffer.max_tcp_streams:
-        command.extend(['-s', f'{justniffer.max_tcp_streams}'])
+        command.extend(['--max-tcp-streams', f'{justniffer.max_tcp_streams}'])
     if justniffer.truncated:
-        command.append('-t')
+        command.append('--truncated')
     if not justniffer.newline:
-        command.append('-N')
-    logger.info(' '.join(command))
-    try:
-        # copy environment
-        env = os.environ.copy()
-        logger.debug(f'justniffer env: {env}')
-        process = Popen(command, stderr=PIPE, env=env)
-    except Exception as e:
-        msg = f'failed to start justniffer: {e}'
-        logger.error(msg)
-        return None, msg
-    return_code = None
-    try:
-        process.wait(timeout=WAIT_TIMEOUT)
-        return_code = process.returncode
-        if (return_code) is not None and return_code != -9:
-            stderr = process.stderr.read().decode() if process.stderr else ''
-            process.wait()
-            err_msg = f'command failed ({return_code}): {stderr.strip()}'
-            logger.error(err_msg)
-            return None, err_msg
-            # return {'message': err_msg}
-        else:
-            logger.info(return_code)
-            return process, None
-    except TimeoutExpired as e:
-        return process, None
+        command.append('--no-newline')
 
 
 @app.exception_handler(Exception)

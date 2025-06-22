@@ -3,9 +3,9 @@ name: phronetis
 description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes cluster.
 type: application
 
-version: 0.1.22
+version: 0.1.24
 
-appVersion: "0.1.22"
+appVersion: "0.1.24"
 
 keywords:
   - justniffer

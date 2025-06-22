@@ -89,9 +89,17 @@ app.kubernetes.io/component: proxy
 {{-  (printf "%s-operator-role-binding" (include "justniffer-stack.fullname" .)) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{- define "justniffer-stack.configPathDir" -}}
+{{- (printf "/mnt/etc/justniffer") -}}
+{{- end -}}
+
+{{- define "justniffer-stack.configPathFile" -}}
+{{- (printf "%s-operator-role-binding" (include "justniffer-stack.configPathDir" .)) -}}
+{{- end -}}
+
 
 {{- define "justserver-image" -}}
-{{- (printf "knspar/phronetis:0.1.45") -}}
+{{- (printf "knspar/phronetis:0.1.46") -}}
 {{- end -}}
 
 {{- define "justernetes-image" -}}

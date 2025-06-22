@@ -22,6 +22,7 @@ class KType(StrEnum):
 class Resolved:
     name: str
     type: KType
+    namespace: str | None = None
 
 
 def get_kubernetes_ips() -> dict[str, Resolved]:
@@ -36,7 +37,7 @@ def get_kubernetes_ips() -> dict[str, Resolved]:
     pods = v1.list_pod_for_all_namespaces(watch=False)
     for pod in pods.items:
         if pod.status and pod.status.pod_ip and pod.metadata and pod.metadata.name:
-            resolved_ips[pod.status.pod_ip] = Resolved(name=pod.metadata.name, type=KType.pod)
+            resolved_ips[pod.status.pod_ip] = Resolved(name=pod.metadata.name, type=KType.pod, namespace=pod.metadata.namespace)
     logger.debug(f'Found {len([r for r in resolved_ips.values() if r.type == KType.pod])} Pod IPs.')
 
     logger.debug('\n--- Collecting Service IPs ---')
@@ -44,13 +45,13 @@ def get_kubernetes_ips() -> dict[str, Resolved]:
     for svc in services.items:
         # Get ClusterIP
         if svc.spec and svc.spec.cluster_ip and svc.spec.cluster_ip != 'None' and svc.metadata and svc.metadata.name:
-            resolved_ips[svc.spec.cluster_ip] = Resolved(name=svc.metadata.name, type=KType.service_cluster_ip)
+            resolved_ips[svc.spec.cluster_ip] = Resolved(name=svc.metadata.name, type=KType.service_cluster_ip, namespace=svc.metadata.namespace)
 
         # Get External IPs for LoadBalancer services
         if svc.status and svc.status.load_balancer and svc.status.load_balancer.ingress and svc.metadata and svc.metadata.name:
             for ingress in svc.status.load_balancer.ingress:
                 if ingress.ip:
-                    resolved_ips[ingress.ip] = Resolved(name=svc.metadata.name, type=KType.service_external_ip)
+                    resolved_ips[ingress.ip] = Resolved(name=svc.metadata.name, type=KType.service_external_ip, namespace=svc.metadata.namespace)
     logger.debug(f'Found {len([r for r in resolved_ips.values() if r.type in [KType.service_cluster_ip, KType.service_external_ip]])} Service IPs.')
 
     logger.debug('\n--- Collecting Node IPs ---')

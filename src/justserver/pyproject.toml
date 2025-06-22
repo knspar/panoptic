@@ -1,6 +1,6 @@
 [project]
 name = "justserver"
-version = "0.1.44"
+version = "0.1.46"
 description = ""
 authors = [
     {name = "Knspar",email = "knspar@proton.me"}

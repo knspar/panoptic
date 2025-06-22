@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: justniffer-extractors-config
+  namespace: {{ .Release.Namespace }}
+data:
+  extractors: |
+    extractors:
+      RequestTimestamp:
+      ConnectionID:
+      ConnectionState:
+      CloseOriginator:
+      ConnectionRequests:
+      SourceIPPort:
+      DestIPPort:
+      justserver.daemon.justniffer_ext:SourceKubernetesName:
+      justserver.daemon.justniffer_ext:DestKubernetesName:
+      ConnectionTime:
+      RequestTime:
+      ResponseTime:
+      Idle1Time:
+      Idle2Time:
+      ConnectionDuration:
+      ProtocolSelector:
+        selectors:
+          TLSInfoExtractor:
+          HttpInfoExtractor:
+          SSHInfoExtractor:
+          PlainTextExtractor:
+            length: 20
