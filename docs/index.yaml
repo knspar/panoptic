@@ -39,7 +39,7 @@ entries:
     name: panoptic
     type: application
     urls:
-    - https://knspar.github.io/phronetis/package/docs/panoptic-0.1.19.tgz
+    - https://knspar.github.io/phronetis/package/panoptic-0.1.19.tgz
     version: 0.1.19
   phronetis:
   - apiVersion: v2
@@ -60,6 +60,6 @@ entries:
     name: phronetis
     type: application
     urls:
-    - https://knspar.github.io/phronetis/package/docs/phronetis-0.1.19.tgz
+    - https://knspar.github.io/phronetis/package/phronetis-0.1.19.tgz
     version: 0.1.19
 generated: "2025-06-22T11:45:39.670739345+02:00"
