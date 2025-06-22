@@ -91,7 +91,7 @@ app.kubernetes.io/component: proxy
 
 
 {{- define "justserver-image" -}}
-{{- (printf "knspar/phronetis:0.1.43") -}}
+{{- (printf "knspar/phronetis:0.1.45") -}}
 {{- end -}}
 
 {{- define "justernetes-image" -}}
