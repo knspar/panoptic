@@ -24,7 +24,7 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:  ["uvicorn", "--log-level", "error", "justserver.daemon:app", "--host", "0.0.0.0", "--port", "8000"]
         env:
-        - name: JUSTNIFFER_JUSTNIFFER_CONFIG_FILE
+        - name: JUSTNIFFER_CONFIG_FILE
           value: {{ include "justniffer-stack.configPathFile" . }}
         - name: JUSTSERVER_JUSTNIFFER_CMD
           value: "nsenter --net=/host/proc/1/ns/net -- justniffer"

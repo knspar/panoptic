@@ -94,7 +94,7 @@ app.kubernetes.io/component: proxy
 {{- end -}}
 
 {{- define "justniffer-stack.configPathFile" -}}
-{{- (printf "%s-operator-role-binding" (include "justniffer-stack.configPathDir" .)) -}}
+{{- (printf "%s/extractors" (include "justniffer-stack.configPathDir" .)) -}}
 {{- end -}}
 
 
