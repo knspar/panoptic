@@ -21,10 +21,6 @@ It is not intended to replace the proxy sidecar or a sidecarless service mesh, b
 ---
 
 
-That’s great news for users looking to get Phronetis up and running quickly in their clusters. Here's a polished version you can use for documentation, a README, or a slide:
-
----
-
 ### 🚀 Easy Installation via Helm
 Phronetis is  available as a Helm chart on [Artifact Hub](https://artifacthub.io/packages/search?repo=phronetis)!  
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/phronetis)](https://artifacthub.io/packages/search?repo=phronetis)
