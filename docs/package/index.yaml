@@ -1,33 +1,12 @@
 apiVersion: v1
 entries:
-  panoptic:
-  - apiVersion: v2
-    appVersion: 0.1.19
-    created: "2025-06-22T11:22:39.777919966+02:00"
-    description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes
-      cluster.
-    digest: 65e83a26fc6da221d16edaba1dd73e7df3f327fc5f8e6f11c46c93c2bb573b36
-    keywords:
-    - justniffer
-    - network
-    - sniffer
-    - monitoring
-    - tracing
-    maintainers:
-    - email: knspar@proton.me
-      name: Knspar
-    name: panoptic
-    type: application
-    urls:
-    - https://knspar.github.io/phronetis/panoptic-0.1.19.tgz
-    version: 0.1.19
   phronetis:
   - apiVersion: v2
-    appVersion: 0.1.19
-    created: "2025-06-22T11:22:39.77880394+02:00"
+    appVersion: 0.1.24
+    created: "2025-06-22T23:35:06.571021349+02:00"
     description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes
       cluster.
-    digest: 7276e85f1e9783d94cd1cfd5f1578285e00d3883a07bc6e95b6d47b28479dc99
+    digest: 882fdea019fe34c700ea9a111715e28a80b7326af4f9e1ad0107901535ece4d4
     keywords:
     - justniffer
     - network
@@ -40,6 +19,6 @@ entries:
     name: phronetis
     type: application
     urls:
-    - https://knspar.github.io/phronetis/phronetis-0.1.19.tgz
-    version: 0.1.19
-generated: "2025-06-22T11:22:39.776693928+02:00"
+    - https://knspar.github.io/phronetis/package/phronetis-0.1.24.tgz
+    version: 0.1.24
+generated: "2025-06-22T23:35:06.57013626+02:00"
