@@ -8,6 +8,7 @@ class Settings(Protocol):
     max_instances: int
     justniffer_cmd: str
     api_key: str | None
+    mocked_ip_mapper: bool
     ENVVAR_PREFIX_FOR_DYNACONF: str
     def to_dict(self) -> dict: ...
 
@@ -17,11 +18,20 @@ API_KEY_ATTR = 'api_key'
 
 MASKED_VALUES = [API_KEY_ATTR]
 
+def _to_boolean(value: str | None | bool) -> bool:
+    if isinstance(value, bool):
+        return value
+    elif value is None:
+        return False
+    else:
+        return value.lower() in ('true', '1', 'yes', 'y')
+
 settings: Settings = cast(Settings, Dynaconf(
     envvar_prefix='JUSTSERVER',
     validators=[
         Validator(MAX_INSTANCES_ATTR, default=10, cast=int),
         Validator('justniffer_cmd', default='nsenter --net=/host/proc/1/ns/net -- justniffer', cast=str),
+        Validator('mocked_ip_mapper', default=False, cast=_to_boolean),
         Validator(API_KEY_ATTR,  default=None, cast=str),
 
     ]

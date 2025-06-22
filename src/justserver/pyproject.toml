@@ -1,6 +1,6 @@
 [project]
 name = "justserver"
-version = "0.1.43"
+version = "0.1.44"
 description = ""
 authors = [
     {name = "Knspar",email = "knspar@proton.me"}
@@ -17,7 +17,8 @@ dependencies = [
     "ipython (>=9.1.0,<10.0.0)",
     "dynaconf (>=3.2.10,<4.0.0)",
     "kubernetes (>=32.0.1,<33.0.0)",
-    "httpx (>=0.28.1,<0.29.0)"
+    "httpx (>=0.28.1,<0.29.0)",
+    "justniffer-cli (>=0.2.2,<0.3.0)"
 ]
 
 [tool.poetry]

@@ -7,7 +7,7 @@ metadata:
     {{- include "justniffer-stack.labels" . | nindent 4 }}
 subjects:
 - kind: ServiceAccount
-  name: {{ include "justniffer-stack.serviceAccountName" . }}
+  name: {{ include "justniffer-stack.proxy.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role

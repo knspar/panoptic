@@ -55,8 +55,12 @@ app.kubernetes.io/component: proxy
 {{- (printf "%s-proxy-service" (include "justniffer-stack.fullname" .)) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "justniffer-stack.serviceAccountName" -}}
-{{- (include "justniffer-stack.fullname" .)  }}
+{{- define "justniffer-stack.proxy.serviceAccountName" -}}
+{{- (printf "%s-proxy" (include "justniffer-stack.fullname" .)) | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{- define "justniffer-stack.daemon.serviceAccountName" -}}
+{{- (printf "%s-daemon" (include "justniffer-stack.fullname" .)) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 

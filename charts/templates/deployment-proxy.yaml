@@ -16,7 +16,7 @@ spec:
         {{- include "justniffer-stack.labels" . | nindent 8 }}
         {{- include "justniffer-stack.proxy.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "justniffer-stack.serviceAccountName" . }}
+      serviceAccountName: {{ include "justniffer-stack.proxy.serviceAccountName" . }}
       containers:
       - name: justniffer-server-proxy-container
         image: {{ include "justserver-image" . }}

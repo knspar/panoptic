@@ -5,14 +5,10 @@ from pydantic import BaseModel, Field
 import requests
 from kubernetes import client, config
 from justernetes.logging import logger
-from justernetes.settings import settings
+from justernetes.settings import JUSTNIFFER_CRD_GROUP, JUSTNIFFER_CRD_PLURAL, JUSTNIFFER_CRD_VERSION, settings, JUSTNIFFER_CRD_NAME
 from threading import Timer
 
 
-RESOURCE = 'justniffers.knspar.github.io'
-CRD_GROUP = 'knspar.github.io'
-CRD_VERSION = 'v1'
-CRD_PLURAL = 'justniffers'
 STATUS_ANNOTATION = 'status'
 
 class Phase(Enum):
@@ -76,7 +72,7 @@ class JustnifferCRD(BaseModel):
     status: Status | None = None
 
 
-@on.create(RESOURCE)  # type: ignore
+@on.create(settings.justniffer_crd_name)  # type: ignore
 def create_handler(body, patch: Patch, **kwargs):
     logger.debug(f'Created Justniffer {body["metadata"]["name"]}')
     logger.debug(f'Created Justniffer {body=}')
@@ -86,7 +82,7 @@ def create_handler(body, patch: Patch, **kwargs):
     logger.debug(f'Created Justniffer {justniffer_crd.metadata.name} {justniffer_crd=}')
 
 
-@on.update(RESOURCE)  # type: ignore
+@on.update(settings.justniffer_crd_name)  # type: ignore
 def update_handler(body,  patch: Patch,  **kwargs):
     for k, v in kwargs.items():
         logger.info(f'Updated Justniffer {body["metadata"]["name"]} {k} {type(v)}')
@@ -96,7 +92,7 @@ def update_handler(body,  patch: Patch,  **kwargs):
     debounce_update_services()
 
 
-@on.delete(RESOURCE)  # type: ignore
+@on.delete(settings.justniffer_crd_name)  # type: ignore
 def delete_handler(body, **kwargs):
     logger.debug(f'Deleting Justniffer {body["metadata"]["name"]}')
 
@@ -114,10 +110,10 @@ def delete_handler(body, **kwargs):
 
     try:
         response = api.patch_namespaced_custom_object_status(
-            group=CRD_GROUP,
-            version=CRD_VERSION,
+            group=settings.justniffer_crd_group,
+            version=settings.justniffer_crd_version,
             namespace=namespace,
-            plural=CRD_PLURAL,
+            plural=JUSTNIFFER_CRD_PLURAL,
             name=name,
             body=status_update
         )
@@ -157,7 +153,7 @@ def update_services():
     config.load_config()
     api = client.CustomObjectsApi()
 
-    l = api.list_cluster_custom_object(CRD_GROUP, CRD_VERSION, CRD_PLURAL)
+    l = api.list_cluster_custom_object(JUSTNIFFER_CRD_GROUP, JUSTNIFFER_CRD_VERSION, JUSTNIFFER_CRD_PLURAL)
 
     justniffer_proxy_endpoint = settings.justniffer_proxy_endpoint
     headers = {'X-API-Key': settings.justniffer_proxy_api_key}
@@ -229,10 +225,10 @@ def update_services():
             name = j.metadata.name
             try:
                 response = api.patch_namespaced_custom_object_status(
-                    group=CRD_GROUP,
-                    version=CRD_VERSION,
+                    group=JUSTNIFFER_CRD_GROUP,
+                    version=JUSTNIFFER_CRD_VERSION,
                     namespace=namespace,
-                    plural=CRD_PLURAL,
+                    plural=JUSTNIFFER_CRD_PLURAL,
                     name=name,
                     body=status_update
                 )
@@ -246,7 +242,7 @@ def get_api() -> client.CoreV1Api:
     return client.CoreV1Api()
 
 
-@timer(RESOURCE, interval=settings.check_interval)  # type: ignore
+@timer(JUSTNIFFER_CRD_NAME, interval=settings.check_interval)  # type: ignore
 def timer_handler(body, **kwargs):
     justniffer_crd = JustnifferCRD.model_validate(body)
     logger.debug(f'Timer triggered for Justniffer {justniffer_crd.metadata.name}')

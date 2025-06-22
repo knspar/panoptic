@@ -5,10 +5,8 @@ JustServer is a FastAPI-based service designed to manage multiple `justniffer` n
 ## 🚀 Features
 
 - 🔐 API key protection on all operational routes
-- 🧵 ThreadPoolExecutor for parallel instance handling
+- 🧵 Parallel instance handling
 - ⚙️ Dynamic justniffer process spawning with configurable filters and encodings
-- 📦 Built-in lifecycle management using FastAPI's `lifespan`
-- 💻 Easy process tracking and UUID-based control
 
 ## 📦 API Endpoints
 

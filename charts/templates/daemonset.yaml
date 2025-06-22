@@ -17,6 +17,7 @@ spec:
         {{- include "justniffer-stack.daemon.selectorLabels" . | nindent 8 }}
         app: justniffer-server
     spec:
+      serviceAccountName: {{ include "justniffer-stack.daemon.serviceAccountName" . }}
       containers:
       - name: justniffer-server-container
         image:  {{ include "justserver-image" . }}

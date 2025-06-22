@@ -79,7 +79,10 @@ def run_justniffer(justniffer: Justniffer) -> tuple[Popen | None, str | None]:
         command.append('-N')
     logger.info(' '.join(command))
     try:
-        process = Popen(command, stderr=PIPE)
+        # copy environment
+        env = os.environ.copy()
+        logger.debug(f'justniffer env: {env}')
+        process = Popen(command, stderr=PIPE, env=env)
     except Exception as e:
         msg = f'failed to start justniffer: {e}'
         logger.error(msg)

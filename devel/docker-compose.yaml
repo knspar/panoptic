@@ -1,0 +1,16 @@
+services:
+  phronetis:
+    container_name: phronetis-dev
+    image: knspar/phronetis-dev
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace
+      - ../.home/ubuntu:/home/ubuntu
+    privileged: true
+    network_mode: host
+    user: ubuntu
+    working_dir: /workspace
+    entrypoint: sleep infinity
+
