@@ -1,53 +1,12 @@
 apiVersion: v1
 entries:
-  panoptic:
-  - apiVersion: v2
-    appVersion: 0.1.19
-    created: "2025-06-22T11:45:39.671754878+02:00"
-    description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes
-      cluster.
-    digest: 20fced662980c06fbe4f65c1cc7bfe1c36d9a2ad23855815aa063243c427cd6c
-    keywords:
-    - justniffer
-    - network
-    - sniffer
-    - monitoring
-    - tracing
-    maintainers:
-    - email: knspar@proton.me
-      name: Knspar
-    name: panoptic
-    type: application
-    urls:
-    - https://knspar.github.io/phronetis/package/phronetis-0.1.19.tgz
-    version: 0.1.19
-  - apiVersion: v2
-    appVersion: 0.1.19
-    created: "2025-06-22T11:45:39.672502848+02:00"
-    description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes
-      cluster.
-    digest: 65e83a26fc6da221d16edaba1dd73e7df3f327fc5f8e6f11c46c93c2bb573b36
-    keywords:
-    - justniffer
-    - network
-    - sniffer
-    - monitoring
-    - tracing
-    maintainers:
-    - email: knspar@proton.me
-      name: Knspar
-    name: panoptic
-    type: application
-    urls:
-    - https://knspar.github.io/phronetis/package/panoptic-0.1.19.tgz
-    version: 0.1.19
   phronetis:
   - apiVersion: v2
-    appVersion: 0.1.19
-    created: "2025-06-22T11:45:39.673233427+02:00"
+    appVersion: 0.1.24
+    created: "2025-06-22T23:35:06.571021349+02:00"
     description: Helm chart for deploying the Justniffer network sniffer in a Kubernetes
       cluster.
-    digest: 894d3a3a724b859cde7602e785ed666213b7e08709bf8ed9b33447b941fc0e73
+    digest: 882fdea019fe34c700ea9a111715e28a80b7326af4f9e1ad0107901535ece4d4
     keywords:
     - justniffer
     - network
@@ -60,6 +19,6 @@ entries:
     name: phronetis
     type: application
     urls:
-    - https://knspar.github.io/phronetis/package/phronetis-0.1.19.tgz
-    version: 0.1.19
-generated: "2025-06-22T11:45:39.670739345+02:00"
+    - https://knspar.github.io/phronetis/package/phronetis-0.1.24.tgz
+    version: 0.1.24
+generated: "2025-06-22T23:35:06.57013626+02:00"
